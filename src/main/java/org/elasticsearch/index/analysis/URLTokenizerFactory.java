@@ -27,12 +27,17 @@ public class URLTokenizerFactory extends AbstractTokenizerFactory {
     public URLTokenizerFactory(IndexSettings indexSettings, Environment environment, String name, Settings settings) {
         super(indexSettings, name, settings);
 
-        String[] parts = settings.getAsArray("part");
-        if (parts != null && parts.length > 0) {
-            this.parts = Arrays.stream(parts)
-                    .map(URLPart::fromString)
-                    .collect(Collectors.toList());
-        }
+        List<String> parts = settings.getAsList("part");
+        this.parts = parts.stream()
+                .map(URLPart::fromString)
+                .collect(Collectors.toList());
+
+        //String[] parts = settings.getAsArray("part");
+        // if (parts != null && parts.length > 0) {
+        //     this.parts = Arrays.stream(parts)
+        //             .map(URLPart::fromString)
+        //             .collect(Collectors.toList());
+        // }
         this.urlDecode = settings.getAsBoolean("url_decode", false);
         this.tokenizeHost = settings.getAsBoolean("tokenize_host", true);
         this.tokenizePath = settings.getAsBoolean("tokenize_path", true);

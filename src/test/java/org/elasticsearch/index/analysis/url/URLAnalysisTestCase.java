@@ -20,26 +20,26 @@ public abstract class URLAnalysisTestCase extends ESIntegTestCase {
     protected static final String TYPE = "test";
 
 
-    @Override
-    protected Collection<Class<? extends Plugin>> nodePlugins() {
-        return Collections.singletonList(AnalysisURLPlugin.class);
-    }
+    // @Override
+    // protected Collection<Class<? extends Plugin>> nodePlugins() {
+    //     return Collections.singletonList(AnalysisURLPlugin.class);
+    // }
 
-    /**
-     * For subclasses to override. Overrides must call {@code super.setUp()}.
-     */
-    @Before
-    @Override
-    public void setUp() throws Exception {
-        super.setUp();
-        String settings = StreamsUtils.copyToStringFromClasspath("/test-settings.json");
-        String mapping = StreamsUtils.copyToStringFromClasspath("/test-mapping.json");
-        client().admin().indices().prepareCreate(INDEX).setSettings(settings).addMapping(TYPE, mapping).get();
-        refresh();
-        Thread.sleep(75);   // Ensure that the shard is available before we start making analyze requests.
-    }
+    // /**
+    //  * For subclasses to override. Overrides must call {@code super.setUp()}.
+    //  */
+    // @Before
+    // @Override
+    // public void setUp() throws Exception {
+    //     super.setUp();
+    //     String settings = StreamsUtils.copyToStringFromClasspath("/test-settings.json");
+    //     String mapping = StreamsUtils.copyToStringFromClasspath("/test-mapping.json");
+    //     client().admin().indices().prepareCreate(INDEX).setSettings(settings).addMapping(TYPE, mapping).get();
+    //     refresh();
+    //     Thread.sleep(75);   // Ensure that the shard is available before we start making analyze requests.
+    // }
 
-    protected List<AnalyzeResponse.AnalyzeToken> analyzeURL(String url, String analyzer) {
-        return client().admin().indices().prepareAnalyze(INDEX, url).setAnalyzer(analyzer).get().getTokens();
-    }
+    // protected List<AnalyzeResponse.AnalyzeToken> analyzeURL(String url, String analyzer) {
+    //     return client().admin().indices().prepareAnalyze(INDEX, url).setAnalyzer(analyzer).get().getTokens();
+    // }
 }
